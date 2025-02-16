@@ -12,7 +12,7 @@
  *   1.0  : Code cleanup and comments, first release
  *
  *------------------------------------------------------------------------- */
-#define progVersion "0.4"              // Program version definition
+#define progVersion "1.0"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -40,7 +40,7 @@
  * Compiler directives to switch debugging on / off
  * Do not enable DEBUG when not needed, Serial coms takes space and time!
  * ------------------------------------------------------------------------- */
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG == 1
   #define debugstart(x) Serial.begin(x)
