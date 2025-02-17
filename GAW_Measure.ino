@@ -14,7 +14,7 @@
  *   1.2  : Solved different readings when connected or not connected to USB
  *            by connecting the separate Arduino power supply to the 5V pin
  *            Carefull, this may absolutely not be much more than 5 volts!
- *          Changed README file
+ *   1.3  : Changed README file
  *
  *------------------------------------------------------------------------- */
 #define progVersion "1.3"              // Program version definition
