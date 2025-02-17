@@ -10,9 +10,10 @@
  *   0.3  : Code improvements
  *   0.4  : calibration completed
  *   1.0  : Code cleanup and comments, first release
+ *   1.1  : Minor most textual improvements
  *
  *------------------------------------------------------------------------- */
-#define progVersion "1.0"              // Program version definition
+#define progVersion "1.1"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -57,7 +58,7 @@
  *                                             Pin definitions for measuring
  * ------------------------------------------------------------------------- */
 #define V5VoltagePin  A0
-#define V05CurrentPin  A1
+#define V05CurrentPin A1
 
 #define V12VoltagePin A2
 #define V12CurrentPin A3
@@ -96,12 +97,12 @@ float     Current  = 0;                     // used to calculate
  * ------------------------------------------------------------------------- */
 float myArduinoVoltage = 4920.0;            // Voltage from Arduino pwr supply
                                             //   in milliVolts
+
 float myVoltage_05V = 5.25;                 // measured voltage from 5V supply
 float myVoltage_12V = 12.33;                // measured voltage from 12V supply
 
 float ACSoffset = 2650;                     // Offset for current sensors
                                             //   expermimentally established
-
 
 /* ------------------------------------------------------------------------- *
  *                                       Buffers to build values for display
@@ -128,16 +129,16 @@ void setup() {
   display3.init(); display3.backlight();
 
                                             // Initial text on all displays
-  LCD_display(display1, 0, 0, F("GAW Measure         "));
-  LCD_display(display1, 1, 0, F("Version:            "));
+  LCD_display(display1, 0, 0, F("GAW Measure     "));
+  LCD_display(display1, 1, 0, F("Version:        "));
   LCD_display(display1, 1, 9, String(progVersion));
 
-  LCD_display(display2, 0, 0, F("GAW Measure         "));
-  LCD_display(display2, 1, 0, F("Version:            "));
+  LCD_display(display2, 0, 0, F("GAW Measure     "));
+  LCD_display(display2, 1, 0, F("Version:        "));
   LCD_display(display2, 1, 9, String(progVersion));
 
-  LCD_display(display3, 0, 0, F("GAW Measure         "));
-  LCD_display(display3, 1, 0, F("Version:            "));
+  LCD_display(display3, 0, 0, F("GAW Measure     "));
+  LCD_display(display3, 1, 0, F("Version:        "));
   LCD_display(display3, 1, 9, String(progVersion));
 
 
@@ -196,7 +197,7 @@ void monitor5V() {
 
   LCD_display(display1, 0, 0, F("Voeding 5 Volt--"));
   LCD_display(display1, 1, 0,  strBuf1 );
-  LCD_display(display1, 1, 6,  " V" );
+  LCD_display(display1, 1, 6,  "V" );
   LCD_display(display1, 1, 9,  strBuf2 );
   LCD_display(display1, 1,15,  "A" );
 }
@@ -232,9 +233,9 @@ void monitor12V() {
 
   LCD_display(display2, 0, 0, F("Voeding 12 Volt-"));
   LCD_display(display2, 1, 0,  strBuf1 );
-  LCD_display(display2, 1, 6,  " V" );
+  LCD_display(display2, 1, 6,  "V" );
   LCD_display(display2, 1, 9,  strBuf2 );
-  LCD_display(display2, 1,15,  " A" );
+  LCD_display(display2, 1,15,  "A" );
 }
 
 
