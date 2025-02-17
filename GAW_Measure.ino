@@ -5,15 +5,18 @@
  * Purpose: Monitor Voltage and current for two power supplies (5V and 12V)
  *          and monitor current for a DCC track supply (Roco Z21)
  * Versions:
- *   0.1  : Initial code base
+ *   0.1  : Initial code base               
  *   0.2  : Code cleanup and comments
  *   0.3  : Code improvements
  *   0.4  : calibration completed
  *   1.0  : Code cleanup and comments, first release
  *   1.1  : Minor most textual improvements
+ *   1.2  : Solved different readings when connected or not connected to USB
+ *            by connecting the separate Arduino power supply to the 5V pin
+ *            Carefull, this may absolutely not be much more than 5 volts!
  *
  *------------------------------------------------------------------------- */
-#define progVersion "1.1"              // Program version definition
+#define progVersion "1.2"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -92,17 +95,22 @@ float     Voltage  = 0;                     // used to calculate
 float     milliVolts  = 0;                  // used to calculate
 float     Current  = 0;                     // used to calculate
 
+
 /* ------------------------------------------------------------------------- *
  *           Measured voltages for Arduino supply, 5V and 12V power supplies
  * ------------------------------------------------------------------------- */
-float myArduinoVoltage = 4920.0;            // Voltage from Arduino pwr supply
+float myArduinoVoltage = 4910.0;            // Voltage from Arduino pwr supply
                                             //   in milliVolts
-
 float myVoltage_05V = 5.25;                 // measured voltage from 5V supply
 float myVoltage_12V = 12.33;                // measured voltage from 12V supply
 
-float ACSoffset = 2650;                     // Offset for current sensors
+
+/* ------------------------------------------------------------------------- *
+ *                                      Experimentally established ACSoffset
+ * ------------------------------------------------------------------------- */
+float ACSoffset = 2465;                     // Offset for current sensors
                                             //   expermimentally established
+
 
 /* ------------------------------------------------------------------------- *
  *                                       Buffers to build values for display
