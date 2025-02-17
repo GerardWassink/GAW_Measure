@@ -37,7 +37,7 @@ A schematic will follow
 ### Voltages
 Be sure to measure the voltages of the power supplies (5 Volt and 12 Volt) exactly with a good measuring instrument that gives you reliability up to two digits. The Voltage of the separate 5 Volt supply for the arduino has to be measured with the connected devices: Arduino, sensors and displays. Insert those values in the following code statements:
 
-float myArduinoVoltage = ***4920.0***; // Voltage from Arduino pwr supply
+float myArduinoVoltage = ***4910.0***; // Voltage from Arduino pwr supply
                                             //   in milliVolts
 
 float myVoltage_05V = ***5.25***;  // measured voltage from 5V supply
@@ -46,9 +46,9 @@ float myVoltage_12V = ***12.33***; // measured voltage from 12V supply
 
 
 ### Currents
-I found it rather difficult to calibrate the current sensors, especially because they gave me different readings when the Arduino was connected to the PC through the USB cable. The USB cable also carries 5 Volts, and this seems to influence the current readout values.
+I found it rather difficult to calibrate the current sensors. The Separate Arduino power supply is now connected to the 5V pin instead of the Vin pin. This eliminates the earlier problem of wildly different current indications dpending on whether the Arduino was connected to the USB cable or not.
 
-I will experiment some more to see whether I can come up with a solution for that. For now one has to fiddle with the **ACSoffset** variable in the Arduino sketch.
+To get proper readings the **ACSoffset** variable in the Arduino sketch is important. I had to fiddle with that to get good results.
 
-float ACSoffset = ***2650***;  // Offset for current sensors
+float ACSoffset = ***2465***;  // Offset for current sensors
 
