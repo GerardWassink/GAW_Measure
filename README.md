@@ -3,6 +3,8 @@
 ## Purpose
 This setup is used to monitor 2 power supplies and a DCC command station, all of which are to be used on my model railroad layout. This way I can monitor them to see whether more capacity is needed.
 
+![GAW Monitor](./gfx/IMG_4087.JPEG)
+
 ## Materials
 - 1 x Arduino Nano
 - 3 x ACS712M5 :: current sensor for max 5 Amps
@@ -58,3 +60,9 @@ I takes a bit of trial and error to calibrate the current sensors. To get proper
 float ACSoffset = ***2460***;  // Offset for current sensors
 
 YMMV...
+
+#### Over-current indication
+An over-current indication had been built in. For now, I set it to 1 Amp. As soon as the current of any power supply goes over this value a LED will light up and a warning will be shown on the display. A reset button clears the over-current alarm.
+
+![Over-current alarm](./gfx/IMG_4088.JPEG)
+
