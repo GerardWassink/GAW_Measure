@@ -9,7 +9,9 @@
  *   0.2  : Code cleanup and comments
  *   0.3  : Code improvements
  *   0.4  : calibration completed
- *   1.0  : Code cleanup and comments, first release
+ *   1.0  : Code cleanup and comments
+ *          First release
+ *
  *   1.1  : Minor most textual improvements
  *   1.2  : Solved different readings when connected or not connected to USB
  *            by connecting the separate Arduino power supply to the 5V pin
@@ -17,6 +19,8 @@
  *   1.3  : Changed README file
  *   1.4  : Switched to one display 20x4 instead of 3 displays 16x2
  *          Built in over-current detection, signal thru LEDs, reset button
+ *          Second release
+ *
  *   1.5  : Added DCC voltage
  *
  *------------------------------------------------------------------------- */
