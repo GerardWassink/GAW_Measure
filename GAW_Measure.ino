@@ -17,9 +17,10 @@
  *   1.3  : Changed README file
  *   1.4  : Switched to one display 20x4 instead of 3 displays 16x2
  *          Built in over-current detection, signal thru LEDs, reset button
+ *   1.5  : Added DCC voltage
  *
  *------------------------------------------------------------------------- */
-#define progVersion "1.4"              // Program version definition
+#define progVersion "1.5"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -70,13 +71,14 @@
 /* ------------------------------------------------------------------------- *
  *                                             Pin definitions for measuring
  * ------------------------------------------------------------------------- */
-#define V5VoltagePin  A0                    // for 5 Volt power supply
+#define V05VoltagePin A0                    // for 5 Volt power supply
 #define V05CurrentPin A1
 
 #define V12VoltagePin A2                    // for 12 Volt power supply
 #define V12CurrentPin A3
 
-#define DccCurrentPin A7                    // for DCC power supply
+#define DccVoltagePin A6                    // for DCC Volt power supply
+#define DccCurrentPin A7
 
 
 /* ------------------------------------------------------------------------- *
@@ -110,6 +112,8 @@ float myArduinoVoltage = 4910.0;            // Voltage from Arduino pwr supply
                                             //   in milliVolts
 float myVoltage_05V = 5.25;                 // measured voltage from 5V supply
 float myVoltage_12V = 12.33;                // measured voltage from 12V supply
+float myVoltage_DCC = 17.60;                // measured voltage from DCC supply
+                                            //   after diode and capacitor
 
 
 /* ------------------------------------------------------------------------- *
@@ -178,7 +182,8 @@ void monitor5V() {
 
   debug(" --5V-- ");
 
-  rawValue = analogRead(V5VoltagePin);      // pin for 5V voltage
+  getRawValue(V05VoltagePin);
+
   Voltage = rawValue * myVoltage_05V / 1023;
   dtostrf( Voltage, 6, 2, strBuf1);
 
@@ -186,11 +191,8 @@ void monitor5V() {
     show_V_Values();
   #endif
 
-  sum = 0;                  // Calculate average over 'count' measurements
-  for (int i=0; i<count; i++) {
-    sum += analogRead(V05CurrentPin);       // pin for 5V current
-  }
-  rawValue = sum / count;                   // Calc average
+  getRawValue(V05CurrentPin);
+
   milliVolts = (rawValue / 1023.0) * myArduinoVoltage;
   Current = ( ( milliVolts - ACSoffset )  / (sensitivity) );
   dtostrf( Current, 6, 2, strBuf2);
@@ -216,7 +218,8 @@ void monitor12V() {
 
   debug(" --12V-- ");
 
-  rawValue = analogRead(V12VoltagePin);        // pin for 12V voltage
+  getRawValue(V12VoltagePin);
+
   Voltage = rawValue * myVoltage_12V / 1023; // 427.3 found experimentally
   dtostrf( Voltage, 6, 2, strBuf1);           //  to obtain proper value
 
@@ -224,11 +227,8 @@ void monitor12V() {
     show_V_Values();
   #endif
 
-  sum = 0;                  // Calculate average over 'count' measurements
-  for (int i=0; i<count; i++) {
-    sum += analogRead(V12CurrentPin);       // pin for 12V current
-  }
-  rawValue = sum / count;                   // Calc average
+  getRawValue(V12CurrentPin);
+
   milliVolts = (rawValue / 1023.0) * myArduinoVoltage;   // yields milliVolts
   Current = ( ( milliVolts - ACSoffset )  / sensitivity );
   dtostrf( Current, 6, 2, strBuf2);
@@ -254,11 +254,18 @@ void monitorDCC() {
 
   debug(" --DCC-- ");
 
-  sum = 0;                  // Calculate average over 'count' measurements
-  for (int i=0; i<count; i++) {
-    sum += analogRead(DccCurrentPin);       // pin for DCC current
-  }
-  rawValue = sum / count;                   // Calc average
+  getRawValue(DccVoltagePin);
+
+  Voltage = 0.4 + myVoltage_DCC * rawValue / 1023;  // 17.60 found experimentally
+                                                    //   +0.4 for diode drop
+  dtostrf( Voltage, 6, 2, strBuf1);           //  to obtain proper value
+
+  #if DEBUG == 1
+    show_V_Values();
+  #endif
+
+  getRawValue(DccCurrentPin);
+
   milliVolts = (rawValue / 1023.0) * myArduinoVoltage;   // yields milliVolts
   Current = ( ( milliVolts - ACSoffset )  / sensitivity );
   dtostrf( Current, 6, 2, strBuf2);
@@ -270,8 +277,23 @@ void monitorDCC() {
   #endif
 
   LCD_display(display1, 1, 0,  "DCC         " );
+  LCD_display(display1, 1, 3,  strBuf1 );
+  LCD_display(display1, 1, 9,  "V" );
   LCD_display(display1, 1,13,  strBuf2 );
   LCD_display(display1, 1,19,  "A" );
+}
+
+
+
+/* ------------------------------------------------------------------------- *
+ *            repeating code te get rawValue from analog pin - getRawValue()
+ * ------------------------------------------------------------------------- */
+void getRawValue(int pin) {
+  sum = 0;                  // Calculate average over 'count' measurements
+  for (int i=0; i<count; i++) {
+    sum += analogRead(pin);       // pin for DCC current
+  }
+  rawValue = sum / count;                   // Calc average
 }
 
 

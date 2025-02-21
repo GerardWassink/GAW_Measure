@@ -8,7 +8,9 @@ This setup is used to monitor 2 power supplies and a DCC command station, all of
 ## Materials
 - 1 x Arduino Nano
 - 3 x ACS712M5 :: current sensor for max 5 Amps
-- Resistors :: 1 x 82K, 1 x 56K, 2 x 1K, 1 x 330
+- Resistors :: 1 x 120K, 1 x 82K, 2 x 56K, 2 x 1K, 1 x 330
+- Diode :: 1 x 1N4007
+- Capacitor :: 1 x 1uF
 - 3 x LED :: in my case: Blue (DCC), Groen (12V), Red (5V)
 - 1 x LCD1602-I2C :: I2C lcd display, four lines of 20 characters
 - 1 x push button for reset over-current condition
@@ -26,6 +28,13 @@ The 5 Volt connection of the Layout power supply can be connected to one of the 
 
 #### 12 Volt layout power supply
 The 12 Volt connection of the Layout power supply **cannot** be connected directly to one of the analog pins. It has to be divided by the 82K and 56K resistors. Connect the 56K resistor to ground and to the 82K resistor. The other end of the 82K resistor goes to the output of the 12 Volt power supply. Feed the Arduino analog pin to measure the 12 Volt to the middle of the voltage divider this should give us around 5 Volts. MAKE SURE this does not supply much more than 5 volts! Measure twice, connect once!
+
+#### DCC layout power supply
+The DCC connection of the Layout power supply also **cannot** be connected directly to one of the analog pins. 
+
+The DCC power is a sort of AC power in block-form. It has to be rectified by the diode and smoothed out by the 1 uF capacitor. After that rectifier I had 17.6 Volts. 
+
+This is way to high for an analog pin of course. It has to be lowered by using a divider, in this case I used 120K and 56K resistors. Connect the 56K resistor to ground and to the 120K resistor. The other end of the 120K resistor goes to the output of the DCC power supply. Feed the Arduino analog pin to measure DCC voltage to the middle of the voltage divider this should give us around 5 Volts. MAKE SURE this does not supply much more than 5 volts! Measure twice, connect once!
 
 #### Separate Arduino 5 Volt power supply
 Connect the negative side to the GND pin of the Arduino and, after careful measurements, connect the positive side to the 5V pin of the Arduino.
@@ -52,6 +61,8 @@ in milliVolts
 float myVoltage_05V = ***5.25***;  // measured voltage from 5V supply
 
 float myVoltage_12V = ***12.33***; // measured voltage from 12V supply
+
+float myVoltage_DCC = 17.60; // measured voltage from DCC supply after diode and capacitor
 
 
 ### Currents
