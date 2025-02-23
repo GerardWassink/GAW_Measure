@@ -22,9 +22,11 @@
  *          Second release
  *
  *   1.5  : Added DCC voltage
+ *   2.0  : Added schematics and PCB design
+ *          Release 2.0
  *
  *------------------------------------------------------------------------- */
-#define progVersion "1.5"              // Program version definition
+#define progVersion "2.0"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *

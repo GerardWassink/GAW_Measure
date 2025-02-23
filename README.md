@@ -17,6 +17,17 @@ This setup is used to monitor 2 power supplies and a DCC command station, all of
 - Mean Well :: power supply 15W 5V/3A
 - Mean Well :: power supply 36W 12V/3A
 
+## PCB
+I finished the schematic:
+
+![GAW Monitor_Schematic](./PCB/Schema.png)
+
+
+A printed circuit board is in development:
+
+![GAW Monitor_PCB](./PCB/PCB_3D.png)
+
+
 ## Description
 The Arduino is the heart of this measuring setup. It has it's ***own power supply*** of around 5 Volts. Do not use the 5 Volt supply that is connected to the layout. The current sensors and the LCD display are also connected to this separate power supply.
 
