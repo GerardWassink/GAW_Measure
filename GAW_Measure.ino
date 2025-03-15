@@ -25,8 +25,11 @@
  *   2.0  : Added schematics and PCB design
  *          Release 2.0
  *
+ *   2.1  : Corrected upper current limit to 2.5 A
+ *   2.2  : Corrected for positive AND negative current limits
+ *
  *------------------------------------------------------------------------- */
-#define progVersion "2.0"              // Program version definition
+#define progVersion "2.2"              // Program version definition
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -54,7 +57,7 @@
  * Compiler directives to switch debugging on / off
  * Do not enable DEBUG when not needed, Serial coms takes space and time!
  * ------------------------------------------------------------------------- */
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG == 1
   #define debugstart(x) Serial.begin(x)
@@ -104,6 +107,7 @@ float     Voltage  = 0;                     // used to calculate
 float     milliVolts  = 0;                  // used to calculate
 float     Current  = 0;                     // used to calculate
 
+float     upperCurrentLimit = 2.5;          // Upper allowable current
 
 /* ------------------------------------------------------------------------- *
  *                                          Variables for over-current alarm
@@ -341,7 +345,7 @@ void show_A_Values() {
  * ------------------------------------------------------------------------- */
 void watchDog(float Cur, int Volt) {
                         // Current highr than treshold, switch LED on
-  if (Cur >= 0.5) {
+  if ( (Cur >= upperCurrentLimit) || (Cur <= (-1.0 * upperCurrentLimit)) ) {
     alarm = true;
     switch (Volt) {
       case 5:
